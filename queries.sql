@@ -44,11 +44,13 @@ ON assignments.enclosure_id = enclosures.id
 GROUP BY (enclosures.name);
 
 -- The names of the other animals sharing an enclosure with a given animal
-WITH p AS ( SELECT animals.name, animals.enclosure_id FROM animals)
+---- (eg. find the names of all the animals sharing the big cat field with Tony)
 
-SELECT * FROM animals 
-INNER JOIN enclosures
+SELECT enclosures.name FROM enclosures
+INNER JOIN animals
 ON enclosures.id = animals.enclosure_id
-INNER JOIN p
-ON enclosures.id = p.animals.enclosure_id
-;
+WHERE animals.name = 'Leo';
+SELECT animals.name FROM animals
+INNER JOIN enclosures
+on animals.enclosure_id = enclosures.id
+WHERE enclosures.name = 'Big Cat Field' AND animals.name != 'Leo'; 
